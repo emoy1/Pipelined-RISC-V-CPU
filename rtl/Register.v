@@ -1,23 +1,4 @@
-`timescale 1ns / 1ps
-//////////////////////////////////////////////////////////////////////////////////
-// Company: 
-// Engineer: 
-// 
-// Create Date: 08/11/2026 09:51:24 AM
-// Design Name: 
-// Module Name: Register
-// Project Name: 
-// Target Devices: 
-// Tool Versions: 
-// Description: 
-// 
-// Dependencies: 
-// 
-// Revision:
-// Revision 0.01 - File Created
-// Additional Comments:
-// 
-//////////////////////////////////////////////////////////////////////////////////
+// regfile.v — 8x16-bit register file, 2 read ports (combinational), 1 write port (synchronous). r0 is hardwired to zero
 
 
 module Register(
@@ -33,8 +14,8 @@ module Register(
     reg [15:0] registers [0:7];
     integer i;
 
-    // init for simulation clarity
-    initial begin
+   
+    initial begin // for sim
         for (i = 0; i < 8; i = i + 1)
             registers[i] = 16'b0;
     end
@@ -43,7 +24,7 @@ module Register(
     assign rs2_data = (rs2_addr == 3'b0) ? 16'b0 : registers[rs2_addr];
 
     always @(posedge clk) begin
-        if (reg_write && rd_addr != 3'b0) // never allow writes to r0
+        if (reg_write && rd_addr != 3'b0) 
             registers[rd_addr] <= rd_data;
     end
 endmodule
